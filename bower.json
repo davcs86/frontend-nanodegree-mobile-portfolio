@@ -1,0 +1,20 @@
+{
+  "name": "frontend-nanodegree-mobile-portfolio",
+  "description": "Project #4 for Udacity's front-end web developer nanodegree program by davcs86.",
+  "main": "dist/index.html",
+  "authors": [
+    "David Castillo <davcs86@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/davcs86/frontend-nanodegree-mobile-portfolio",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "ngrok"
+  ]
+}
