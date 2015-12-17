@@ -1,11 +1,11 @@
 /*eslint no-console: 0*/
+
 /*
 Welcome to the 60fps project! Your goal is to make Cam's Pizzeria website run
 jank-free at 60 frames per second.
 
 There are two major issues in this code that lead to sub-60fps performance. Can
 you spot and fix both?
-
 
 Built into the code, you'll find a few instances of the User Timing API
 (window.performance), which will be console.log()ing frame rate data into the
@@ -20,129 +20,23 @@ cameron *at* udacity *dot* com
 // As you may have realized, this website randomly generates pizzas.
 // Here are arrays of all possible pizza ingredients.
 var pizzaIngredients = {};
-pizzaIngredients.meats = [
-    "Pepperoni",
-    "Sausage",
-    "Fennel Sausage",
-    "Spicy Sausage",
-    "Chicken",
-    "BBQ Chicken",
-    "Chorizo",
-    "Chicken Andouille",
-    "Salami",
-    "Tofu",
-    "Bacon",
-    "Canadian Bacon",
-    "Proscuitto",
-    "Italian Sausage",
-    "Ground Beef",
-    "Anchovies",
-    "Turkey",
-    "Ham",
-    "Venison",
-    "Lamb",
-    "Duck",
-    "Soylent Green",
-    "Carne Asada",
-    "Soppressata Picante",
-    "Coppa",
-    "Pancetta",
-    "Bresola",
-    "Lox",
-    "Guanciale",
-    "Chili",
-    "Beef Jerky",
-    "Pastrami",
-    "Kielbasa",
-    "Scallops",
-    "Filet Mignon"
-];
-pizzaIngredients.nonMeats = [
-    "White Onions",
-    "Red Onions",
-    "Sauteed Onions",
-    "Green Peppers",
-    "Red Peppers",
-    "Banana Peppers",
-    "Ghost Peppers",
-    "Habanero Peppers",
-    "Jalapeno Peppers",
-    "Stuffed Peppers",
-    "Spinach",
-    "Tomatoes",
-    "Pineapple",
-    "Pear Slices",
-    "Apple Slices",
-    "Mushrooms",
-    "Arugula",
-    "Basil",
-    "Fennel",
-    "Rosemary",
-    "Cilantro",
-    "Avocado",
-    "Guacamole",
-    "Salsa",
-    "Swiss Chard",
-    "Kale",
-    "Sun Dried Tomatoes",
-    "Walnuts",
-    "Artichoke",
-    "Asparagus",
-    "Caramelized Onions",
-    "Mango",
-    "Garlic",
-    "Olives",
-    "Cauliflower",
-    "Polenta",
-    "Fried Egg",
-    "Zucchini",
-    "Hummus"
-];
-pizzaIngredients.cheeses = [
-    "American Cheese",
-    "Swiss Cheese",
-    "Goat Cheese",
-    "Mozzarella Cheese",
-    "Parmesean Cheese",
-    "Velveeta Cheese",
-    "Gouda Cheese",
-    "Muenster Cheese",
-    "Applewood Cheese",
-    "Asiago Cheese",
-    "Bleu Cheese",
-    "Boursin Cheese",
-    "Brie Cheese",
-    "Cheddar Cheese",
-    "Chevre Cheese",
-    "Havarti Cheese",
-    "Jack Cheese",
-    "Pepper Jack Cheese",
-    "Gruyere Cheese",
-    "Limberger Cheese",
-    "Manchego Cheese",
-    "Marscapone Cheese",
-    "Pecorino Cheese",
-    "Provolone Cheese",
-    "Queso Cheese",
-    "Roquefort Cheese",
-    "Romano Cheese",
-    "Ricotta Cheese",
-    "Smoked Gouda"
-];
-pizzaIngredients.sauces = [
-    "Red Sauce",
-    "Marinara",
-    "BBQ Sauce",
-    "No Sauce",
-    "Hot Sauce"
-];
-pizzaIngredients.crusts = [
-    "White Crust",
-    "Whole Wheat Crust",
-    "Flatbread Crust",
-    "Stuffed Crust"
-];
+pizzaIngredients.meats=["Pepperoni","Sausage","Fennel Sausage","Spicy Sausage","Chicken",
+    "BBQ Chicken","Chorizo","Chicken Andouille","Salami","Tofu","Bacon","Canadian Bacon","Proscuitto",
+    "Italian Sausage","Ground Beef","Anchovies","Turkey","Ham","Venison","Lamb",
+    "Duck","Soylent Green","Carne Asada","Soppressata Picante","Coppa","Pancetta",
+    "Bresola","Lox","Guanciale","Chili","Beef Jerky","Pastrami","Kielbasa","Scallops","Filet Mignon"];
 
+pizzaIngredients.nonMeats=["White Onions","Red Onions","Sauteed Onions","Green Peppers",
+    "Red Peppers","Banana Peppers","Ghost Peppers","Habanero Peppers","Jalapeno Peppers",
+    "Stuffed Peppers","Spinach","Tomatoes","Pineapple","Pear Slices","Apple Slices",
+    "Mushrooms","Arugula","Basil","Fennel","Rosemary","Cilantro","Avocado","Guacamole",
+    "Salsa","Swiss Chard","Kale","Sun Dried Tomatoes","Walnuts","Artichoke","Asparagus",
+    "Caramelized Onions","Mango","Garlic","Olives","Cauliflower","Polenta","Fried Egg","Zucchini","Hummus"];
+
+pizzaIngredients.cheeses=["American Cheese","Swiss Cheese","Goat Cheese","Mozzarella Cheese","Parmesean Cheese","Velveeta Cheese","Gouda Cheese","Muenster Cheese","Applewood Cheese","Asiago Cheese","Bleu Cheese","Boursin Cheese","Brie Cheese","Cheddar Cheese","Chevre Cheese","Havarti Cheese","Jack Cheese","Pepper Jack Cheese","Gruyere Cheese","Limberger Cheese","Manchego Cheese","Marscapone Cheese","Pecorino Cheese","Provolone Cheese","Queso Cheese","Roquefort Cheese","Romano Cheese","Ricotta Cheese","Smoked Gouda"];
+
+pizzaIngredients.sauces=["Red Sauce","Marinara","BBQ Sauce","No Sauce","Hot Sauce"];
+pizzaIngredients.crusts=["White Crust","Whole Wheat Crust","Flatbread Crust","Stuffed Crust"];
 // Name generator pulled from http://saturdaykid.com/usernames/generator.html
 // Capitalizes first letter of each word
 String.prototype.capitalize = function() {
@@ -399,58 +293,57 @@ var pizzaElementGenerator = function(i) {
     return pizzaContainer;
 };
 
+// Changes the value for the size of the pizza above the slider
+function changeSliderLabel(size) {
+    switch(size) {
+    case "1":
+        document.querySelector("#pizzaSize").innerHTML = "Small";
+        return;
+    case "2":
+        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        return;
+    case "3":
+        document.querySelector("#pizzaSize").innerHTML = "Large";
+        return;
+    case "4":
+        document.querySelector("#pizzaSize").innerHTML = "Extra Large";
+        return;
+    default:
+        console.log("bug in changeSliderLabel");
+    }
+}
+
+// Changes the slider value to a percent width
+function sizeSwitcher (size) {
+    switch(size) {
+    case "1":
+        return 25;
+    case "2":
+        return 33.33;
+    case "3":
+        return 50;
+    case "4":
+        return 66.66;
+    default:
+        console.log("bug in sizeSwitcher");
+    }
+}
+
+// Iterates through pizza elements on the page and changes their widths
+function changePizzaSizes(size) {
+    var elems = document.querySelectorAll(".randomPizzaContainer");
+    for (var i = 0; i < elems.length; i++) {
+        var dx = sizeSwitcher(size);
+        var newwidth = dx + "%";
+        elems[i].style.width = newwidth;
+    }
+}
+
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
 var resizePizzas = function(size) {
     window.performance.mark("mark_start_resize");   // User Timing API function
 
-    // Changes the value for the size of the pizza above the slider
-    function changeSliderLabel(size) {
-        switch(size) {
-        case "1":
-            document.querySelector("#pizzaSize").innerHTML = "Small";
-            return;
-        case "2":
-            document.querySelector("#pizzaSize").innerHTML = "Medium";
-            return;
-        case "3":
-            document.querySelector("#pizzaSize").innerHTML = "Large";
-            return;
-        case "4":
-            document.querySelector("#pizzaSize").innerHTML = "Extra Large";
-            return;
-        default:
-            console.log("bug in changeSliderLabel");
-        }
-    }
-
     changeSliderLabel(size);
-
-   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-
-    // Iterates through pizza elements on the page and changes their widths
-    function changePizzaSizes(size) {
-        // Changes the slider value to a percent width
-        function sizeSwitcher (size) {
-            switch(size) {
-            case "1":
-                return 25;
-            case "2":
-                return 33.33;
-            case "3":
-                return 50;
-            case "4":
-                return 66.66;
-            default:
-                console.log("bug in sizeSwitcher");
-            }
-        }
-        var elems = document.querySelectorAll(".randomPizzaContainer");
-        for (var i = 0; i < elems.length; i++) {
-            var dx = sizeSwitcher(size);
-            var newwidth = dx + "%";
-            elems[i].style.width = newwidth;
-        }
-    }
 
     changePizzaSizes(size);
 
@@ -500,11 +393,17 @@ function updatePositions() {
         frame++;
         window.performance.mark("mark_start_frame");
 
+        // a 5-length array for the 5 possible values of phase
+        var phaseArr = [];
+        for (var pi = 0; pi < 5; pi++) {
+            phaseArr.push(Math.sin((window.updatePositionsDistance / 1250) + (pi % 5)));
+        }
+
         var items = document.querySelectorAll(".mover");
 
         for (var i = 0; i < items.length; i++) {
-            var phase = Math.sin((window.updatePositionsDistance / 1250) + (i % 5));
-            items[i].style.left = items[i].basicLeft + 100 * phase + "px";
+            var phase = phaseArr[(i % 5)];
+            items[i].style.left = (items[i].basicLeft + 100 * phase) + "px";
         }
 
         // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -526,7 +425,7 @@ window.requestAnimationFrame(updatePositions);
 // runs updatePositions on scroll
 window.addEventListener("scroll", function(){
     window.updatePositionsFlag = true;
-    window.updatePositionsDistance = document.body.scrollTop;
+    window.updatePositionsDistance = this.scrollY; //document.body.scrollTop; scrollTop triggers reflow
 });
 
 

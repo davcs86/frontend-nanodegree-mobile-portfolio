@@ -6,6 +6,7 @@
     <meta name="description" content="Cam's Pizzeria">
     <meta name="author" content="David Castillo <davcs86@gmail.com>">
     <title>Cameron Pittman: Portfolio</title>
+    <!-- Styles and scripts are loaded just before the closing BODY tag to avoid render blocking -->
 </head>
 
 <body>
@@ -149,6 +150,7 @@
             elem.style.width = "73.333px";
             elem.basicLeft = (i % cols) * s;
             elem.style.top = (Math.floor(i / cols) * s) + "px";
+            // sets the initial left position, avoiding a unnecessary call to update
             phase = Math.sin(i % 5);
             elem.style.left = elem.basicLeft + 100 * phase + "px";
             movingPizzasDiv.appendChild(elem);
@@ -156,6 +158,6 @@
         }
     });
     </script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/main.js" async></script>
 </body>
 </html>

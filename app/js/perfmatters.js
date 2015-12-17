@@ -1,13 +1,16 @@
-// Measuring the Critical Rendering Path with Navigation Timing
-// https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp
+"use strict";
+
+// settings for google fonts.
 window.WebFontConfig = {
-    google: { families: [ "Open+Sans:400,700:latin" ] },
-    active: function() {
-        sessionStorage.fonts = true;
-    }
+    google: { families: [ "Open+Sans:400,700:latin" ] }
 };
+// declare empty function for google analytics (just to pass eslint test)
 window.ga = function(){};
 
+/**
+ * Measuring the Critical Rendering Path with Navigation Timing
+ * https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp
+ */
 function logCRP() {
     var t = window.performance.timing,
         dcl = t.domContentLoadedEventStart - t.domLoading,
@@ -15,8 +18,13 @@ function logCRP() {
     var stats = document.getElementById("crp-stats");
     stats.textContent = "DCL: " + dcl + "ms, onload: " + complete + "ms";
 }
+/**
+ * Page load event listener, used to log the CRP then load async the Google font
+ * and the Google analytics objects.
+ */
 window.addEventListener("load", function() {
     logCRP();
+
     (function() {
         var wf = document.createElement("script");
         wf.src = ("https:" == document.location.protocol ? "https" : "http") +
