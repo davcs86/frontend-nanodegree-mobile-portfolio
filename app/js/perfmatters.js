@@ -20,7 +20,7 @@ function logCRP() {
 }
 /**
  * Page load event listener, used to log the CRP then load async the Google font
- * and the Google analytics objects.
+ * and the Google analytics scripts.
  */
 window.addEventListener("load", function() {
     logCRP();
