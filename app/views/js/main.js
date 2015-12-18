@@ -352,7 +352,7 @@ function sizeSwitcher (size) {
     case "3":
         return 50;
     case "4":
-        return 66.66;
+        return 100;
     default:
         console.log("bug in sizeSwitcher");
     }
@@ -393,9 +393,36 @@ var resizePizzas = function(size) {
 };
 
 /**
+ * Creates and appends all of the pizzas when the page loads.
+ */
+function createRandomPizzas(){
+    window.performance.mark("mark_start_generating"); // collect timing data
+
+    /**
+     * Optimization: The selector for the container is executed one time before the for loop
+     */
+    var pizzasDiv = document.getElementById("randomPizzas");
+    /**
+     * Optimization: The new random pizzas are appended to a document fragment in the for loop, then this document fragment is appended
+     * to the DOM tree one time.
+     * https://developer.mozilla.org/en/docs/Web/API/DocumentFragment
+     */
+    var docfrag = document.createDocumentFragment();
+    for (var i = 2; i < 100; i++) {
+        docfrag.appendChild(pizzaElementGenerator(i));
+    }
+    pizzasDiv.appendChild(docfrag);
+
+    // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
+    window.performance.mark("mark_end_generating");
+    window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
+    var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
+    console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
+}
+
+/**
  * Iterator for number of times the pizzas in the background have scrolled.
  * Used by "s() to decide when to log the average time per frame
- * @param
  */
 var frame = 0;
 
@@ -416,22 +443,35 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
  * The following code for sliding background pizzas was pulled from Ilya's demo found at:
  * https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
  */
-// Moves the sliding background pizzas based on scroll position
+
+/**
+ * Moves the sliding background pizzas based on scroll position based on updatePositionsFlag, which is set true in the window `onscroll` event
+ * @param {long} timestamp - timestamp sent from requestAnimationFrame
+ */
 var updatePositionsFlag = true;
+var updatePositionsItems;
 function updatePositions(timestamp) {
+    /**
+     * Optimization: Updates the moving pizzas position only when window `onscroll` event happens
+     */
     if (updatePositionsFlag){
         frame++;
         window.performance.mark("mark_start_frame");
 
-        var items = document.querySelectorAll(".mover");
-
+        /**
+         * Optimization: Calculates only the phases needed.
+         */
         var cachedPhases = [];
         for (var pi = 0; pi < 5; pi++) {
             cachedPhases.push(Math.sin(pi + timestamp/1000)+1);
         }
-        for (var i = 0; i < items.length; i++) {
+
+        /**
+         * Optimization: The selector for the moving pizzas is executed only one time just after of creating them.
+         */
+        for (var i = 0; i < updatePositionsItems.length; i++) {
             var phase = cachedPhases[(i%5)];
-            items[i].style.left = (items[i].basicLeft + 100 * phase) + "px";
+            updatePositionsItems[i].style.left = (updatePositionsItems[i].basicLeft + 100 * phase) + "px";
         }
 
         // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -447,63 +487,56 @@ function updatePositions(timestamp) {
     window.requestAnimationFrame(updatePositions);
 }
 
-function createMovingPizzas(timestamp){
+/**
+ * Creates and appends all of the moving pizzas when the page loads.
+ */
+function createMovingPizzas(){
     var cols = 8,
         s = 256,
         phase;
-    // moved the div selection outside the for loop, to improve time.
+    /**
+     * Optimization: The selector for the moving pizzas container is executed only one time before the for loop.
+     */
     var movingPizzasDiv = document.querySelector("#movingPizzas1");
+    /**
+     * Optimization: The new moving pizzas are appended to a document fragment in the for loop, then this document fragment is appended
+     * to the DOM tree one time.
+     * https://developer.mozilla.org/en/docs/Web/API/DocumentFragment
+     */
     var docfrag = document.createDocumentFragment();
     for (var i = 0; i < 300; i++) {
+        /**
+         * Optimization: Changed the element created to DIV, and left the background and dimensions in the CSS class. Also, resized the pizza.png image to the exact dimension for avoid resizing in runtime.
+         */
         var elem = document.createElement("div");
         elem.className = "mover";
-        elem.src = "images/pizza.png";
-        //elem.style.height = "100px";
-        /* make same size of the image to avoid resizing */
-        //elem.style.width = "77px";
         elem.basicLeft = (i % cols) * s;
         elem.style.top = (Math.floor(i / cols) * s) + "px";
-        // sets the initial left position, avoiding a unnecessary call to update
-        phase = (Math.sin((i%5) + timestamp/1000)+1);
+        phase = Math.sin(i%5);
         elem.style.left = (elem.basicLeft + 100 * phase) + "px";
         docfrag.appendChild(elem);
-        //elem = null;
     }
     movingPizzasDiv.appendChild(docfrag);
+    /**
+     * Executes the selector for the moving pizzas (used in updatePositions).
+     */
+    updatePositionsItems = document.querySelectorAll(".mover");
 }
 
-function createRandomPizzas(){
-    window.performance.mark("mark_start_generating"); // collect timing data
-
-    // This for-loop actually creates and appends all of the pizzas when the page loads
-    var pizzasDiv = document.getElementById("randomPizzas");
-    var docfrag = document.createDocumentFragment();
-    for (var i = 2; i < 100; i++) {
-        docfrag.appendChild(pizzaElementGenerator(i));
-    }
-    pizzasDiv.appendChild(docfrag);
-
-    // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
-    window.performance.mark("mark_end_generating");
-    window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
-    var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
-    console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
-}
-
-// Generates the sliding pizzas when the page onload event.
+/**
+ * Page onload event, used to call createRandomPizzas, createMovingPizzas and updatePositions methods with requestAnimationFrame.
+ */
 window.addEventListener("load", function() {
-    window.requestAnimationFrame(createMovingPizzas);
     window.requestAnimationFrame(createRandomPizzas);
-    //updatePositions(event.timeStamp);
+    window.requestAnimationFrame(createMovingPizzas);
     window.requestAnimationFrame(updatePositions);
-    document.getElementById("sizeSlider").addEventListener("change",function(){
-        resizePizzas(this.value);
-    });
 });
+/**
+ * Page onscroll event, used to set updatePositionsFlag to true (used in updatePositions).
+ */
 window.addEventListener("scroll", function(){
-    //if (!window.updatePositionsFlag) {
     window.updatePositionsFlag = true;
-        //window.updatePositionsDistance = window.scrollY;
-    //updatePositions(event.timeStamp);
-    //}
+});
+document.getElementById("sizeSlider").addEventListener("change",function(){
+    resizePizzas(this.value);
 });

@@ -103,8 +103,31 @@ Project #4 for Udacity's front-end web developer nanodegree program by davcs86.
 - Added the extra large size for pizza slider.
 - All the assets (css, js and images) are minified and optimized.
 
-
 ##### JS
+
+- Optimizations to `view/js/main.js`:
+    - In `changePizzaSizes` method, the selector of elements is executed one time before the for loop.
+    - In `resizePizzas` method:
+        - Added the `Extra large` size (was a TODO).
+        - Changed the inner `sizeSwitcher` method to return a percentage instead of a fraction, and moved to outer scope.
+        - Removed the `determineDx` method, the new width is the percentage returned by `sizeSwitcher` method.
+        - Moved the inner `changePizzaSizes` method to outer scope.
+    - In `changePizzaSizes` method, the selector of elements is executed one time before the for loop.
+    - The for loop to create and append the random pizzas is moved to a new method, `createRandomPizzas`. With the following changes:
+        - The selector for the container is executed one time before the for loop.
+        - The new random pizzas are appended to a [document fragment](https://developer.mozilla.org/en/docs/Web/API/DocumentFragment) in the for loop, then this document fragment is appended to the DOM tree one time.
+    - In `updatePositions` method:
+        - Changed to update the moving pizzas position only when window `onscroll` event happens.
+        - Changed to calculate only the phases needed.
+        - Changed to calculate the phases based on the timestamp sent from `requestAnimationFrame`, instead of `document.body.scrollTop` (which causes reflow).
+        - The selector for the moving pizzas is executed only one time just after of creating them in the `createMovingPizzas`.
+    - In `createMovingPizzas` method:
+        - The selector for the moving pizzas container is executed only one time before the for loop.
+        - The new moving pizzas are appended to a document fragment in the for loop, then this document fragment is appended to the DOM tree one time.
+        - Changed the element created to DIV, and left the background and dimensions in the CSS class.
+        - Also, resized the `views/images/pizza.png` image to the exact dimension (100x77px) in order to avoid resizing in runtime.
+        - Set page `onload` event to call `createRandomPizzas`, `createMovingPizzas` and `updatePositions` methods with `requestAnimationFrame`.
+        - Set Page `onscroll` event, used to set `updatePositionsFlag` to `true` (used in `updatePositions`).
 
 ##### Result
 
