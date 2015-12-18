@@ -3,7 +3,6 @@
 module.exports = function (grunt) {
 
     var mozjpeg = require("imagemin-mozjpeg");
-    //var imageminJpegtran = require("imagemin-jpegtran");
     var imageminPngcrush = require("imagemin-pngcrush");
 
     require("load-grunt-tasks")(grunt);
@@ -25,14 +24,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     dot: true,
-                    src: [
-                        ".tmp",
-                        "<%= config.dist %>/*",
-                        "!<%= config.dist %>/.git*"
-                    ]
+                    src: ["<%= config.dist %>/*"]
                 }]
-            },
-            server: ".tmp"
+            }
         },
 
         // Make sure code styles are up to par and there are no obvious mistakes
@@ -43,11 +37,11 @@ module.exports = function (grunt) {
             ]
         },
 
+        // Minify images
         imagemin: {
             processpng: {
                 options: {
                     optimizationLevel: 7,
-                    //use: [mozjpeg({quality: 80, progressive: false})]
                     use: [imageminPngcrush({reduce: true})]
                 },
                 files: [{
@@ -61,16 +55,18 @@ module.exports = function (grunt) {
                 options: {
                     optimizationLevel: 7,
                     use: [mozjpeg({quality: 50, progressive: false})]
-                    //use: [imageminJpegtran()]
                 },
                 files: [{
                     expand: true,
                     cwd: "<%= config.app %>/",
-                    src: ["**/*.{gif,jpeg,jpg}"],
+                    src: [
+                        "**/*.{gif,jpeg,jpg}"
+                    ],
                     dest: "<%= config.dist %>/"
                 }]
             }
         },
+        // Minify html files
         htmlmin: {
             dist: {
                 options: {
@@ -93,6 +89,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
+        // Minify css files
         cssmin: {
             target: {
                 files: [{
@@ -104,6 +101,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
+        // Minify js
         uglify: {
             target: {
                 files: [{
@@ -123,8 +121,6 @@ module.exports = function (grunt) {
         "uglify",
         "htmlmin",
         "imagemin:processpng",
-        //"imagemin:removeexif",
-        "imagemin:build",
-        "clean:server"
+        "imagemin:build"
     ]);
 };

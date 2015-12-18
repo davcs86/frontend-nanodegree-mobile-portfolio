@@ -65,6 +65,7 @@ Project #4 for Udacity's front-end web developer nanodegree program by davcs86.
 - Created a thumbnail version of pizzeria.jpg since the original size was too much for index.html
 - Added media type to styles to wait only for the necessary styles.
 - The script `js/perfmatters.js` is loaded asynchronous.
+- All the assets (css, js and images) are minified and optimized.
 
 ##### JS
 
@@ -90,7 +91,7 @@ Project #4 for Udacity's front-end web developer nanodegree program by davcs86.
     ```
 ##### Result
 
-- Check out the PageSpeed Insights [scores](https://github.com/udacity/frontend-nanodegree-mobile-portfolio)
+- Check out the PageSpeed Insights [scores](https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fd-castillo.info%2Fudacity%2Ffrontend-nanodegree-mobile-portfolio%2F&tab=mobile)
 
 ####Part 2: Optimize Frames per Second in pizza.html
 
@@ -99,10 +100,12 @@ Project #4 for Udacity's front-end web developer nanodegree program by davcs86.
 - Moved the styles and scripts to just before the closing `body` tag to avoid render blocking.
 - Moved `div#movingPizzas1` outside of any other div in order to create an independent layer, to improve _Composite layer_ times.
 - The script `js/main.js` is loaded asynchronous.
-- With exception of the page `DOMContentLoaded` event, which creates
+- Added the extra large size for pizza slider.
+- All the assets (css, js and images) are minified and optimized.
+
 
 ##### JS
 
 ##### Result
 
-- Check out the page [here](https://github.com/udacity/frontend-nanodegree-mobile-portfolio)
+- Check out the page [here](http://d-castillo.info/udacity/frontend-nanodegree-mobile-portfolio/views/pizza.html)
